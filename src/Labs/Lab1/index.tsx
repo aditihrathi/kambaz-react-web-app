@@ -251,7 +251,6 @@ Your favorite books (in no particular order)
 <h4>Anchor tag</h4>
 Please <a href="https://www.lipsum.com" id="wd-lipsum">click here</a> to get dummy text<br/>
 
-<h4>Anchor tag</h4>
 Please <a href="https://github.com/aditihrathi/CS5610" id="wd-github">click here</a> to go go to my CS5610 repo!<br/>
       </div>
   );}

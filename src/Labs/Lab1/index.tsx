@@ -198,6 +198,14 @@ Your favorite books (in no particular order)
         id="wd-all-good">
   Hello World!
 </button>
+
+<h5 id="wd-file-upload">File Upload Button</h5>
+  <input type="file" id="myFile" name="filename" />
+  <button type="button"
+        onClick={() => alert("Thanks!!")}
+        id="wd-upload">
+        Upload</button>
+  
 <h5 id="wd-radio-buttons">Radio buttons</h5>
 
 <label>Favorite movie genre:</label><br />

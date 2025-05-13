@@ -1,0 +1,15 @@
+export default function CourseStatus() {
+  return (
+    <div id="wd-course-status">
+      <h2>Course Status</h2>
+      <button>Unpublish</button> <button>Publish</button>
+      <div><p></p></div>
+ 
+      <div> <button> Import Existing Content</button> </div>
+      <div> <button> Import From Commons</button> </div>
+      <div> <button> Choose Home Page</button> </div>
+      <div> <button> Import Existing Content</button> </div>
+      <div> <button> Import Existing Content</button> </div>
+      <div> <button> Import Existing Content</button> </div>
+      <div> <button> Import Existing Content</button> </div>
+    </div> );}

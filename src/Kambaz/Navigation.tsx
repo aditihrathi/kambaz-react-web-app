@@ -65,8 +65,8 @@ export default function KambazNavigation() {
       <NavLink
         to="/Kambaz/Courses"
         className={({ isActive }) =>
-          `list-group-item text-center border-0 d-flex flex-column align-items-center justify-content-center ${
-            isActive ? "active-link" : "bg-black text-white"
+        `list-group-item text-center border-0 d-flex flex-column align-items-center justify-content-center ${
+          isActive ? "active-link" : "bg-black text-white"
           }`
         }
       >

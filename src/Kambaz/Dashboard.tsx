@@ -1,99 +1,97 @@
+import { Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 export default function Dashboard() {
+  console.log("Dashboard component rendered");
+
+  const courses = [
+    {
+      id: "1234",
+      title: "CS1234 React JS",
+      description: "Full Stack software developer",
+      image: "/images/computerscience.jpg",
+    },
+    {
+      id: "1800",
+      title: "CS1800 Algorithms",
+      description: "Learn how to use algorithms to solve problems!",
+      image: "/images/Algorithm.jpg",
+    },
+    {
+      id: "3600",
+      title: "Math3600 Linear Algebra",
+      description: "Basics of Machine Learning",
+      image: "/images/math.jpg",
+    },
+    {
+      id: "2410",
+      title: "CS2410 Programming Languages",
+      description: "Understand how to create your own language!",
+      image: "/images/proglang.jpg",
+    },
+    {
+      id: "7126",
+      title: "ENG7126 Media & Politics",
+      description: "How does media and stakeholders shape public views?",
+      image: "/images/ling.jpg",
+    },
+    {
+      id: "6230",
+      title: "CHEM6230 Organic Chemistry",
+      description: "Further understanding of organic chemistry",
+      image: "/images/orgo.jpg",
+    },
+    {
+      id: "3245",
+      title: "PHIL3245 Tech & Human Values",
+      description: "How does technology impact human evolution?",
+      image: "/images/phil.jpg",
+    },
+  ];
+
   return (
-    <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses (7)</h2> <hr />
+    <div id="wd-dashboard" className="ps-md-5 ms-md-5">
+      <h1 id="wd-dashboard-title">Dashboard</h1>
+      <hr />
+      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
+      <hr />
       <div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-
-          <Link to="/Kambaz/Courses/1234/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/computerscience.jpg" width={200} />
-            <div>
-              <h5> CS1234 React JS </h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack software developer  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="wd-dashboard-course"> 
-        <Link to="/Kambaz/Courses/1800/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/Algorithm.jpg" width={200} />
-            <div>
-              <h5> CS1800 Algorithms </h5>
-              <p className="wd-dashboard-course-title">
-                Learn how to use algorithms to solve problems!  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="wd-dashboard-course"> 
-        <Link to="/Kambaz/Courses/3600/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/math.jpg" width={200} />
-            <div>
-              <h5> Math3600 Linear Algebra </h5>
-              <p className="wd-dashboard-course-title">
-                Basics of Machine Learning  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <Link to="/Kambaz/Courses/2410/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/proglang.jpg" width={200} />
-            <div>
-              <h5> CS2410 Programming Languages </h5>
-              <p className="wd-dashboard-course-title">
-                Understand how to create your own language!  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="wd-dashboard-course"> 
-        <Link to="/Kambaz/Courses/7126/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/ling.jpg" width={200} />
-            <div>
-              <h5> ENG7126 Media & Politics </h5>
-              <p className="wd-dashboard-course-title">
-                How does media and its stakeholders impact the general public's views?  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="wd-dashboard-course"> 
-        <Link to="/Kambaz/Courses/6230/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/orgo.jpg" width={200} />
-            <div>
-              <h5> CHEM6230 Organic Chemistry </h5>
-              <p className="wd-dashboard-course-title">
-                Further understanding of organic chemistry  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-
-        <div className="wd-dashboard-course"> 
-        <Link to="/Kambaz/Courses/3245/Home"
-                className="wd-dashboard-course-link" >
-            <img src="/images/phil.jpg" width={200} />
-            <div>
-              <h5> PHIL3245 Tech & Human Values </h5>
-              <p className="wd-dashboard-course-title">
-                How does technology impact human evolution, and vice versa?  </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+          {courses.map((course) => (
+            <Col
+              key={course.id}
+              className="wd-dashboard-course"
+              style={{ width: "270px" }}
+            >
+              <Card>
+                <Link
+                  to={`/Kambaz/Courses/${course.id}/Home`}
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
+                >
+                  <Card.Img
+                    variant="top"
+                    src={course.image}
+                    width="100%"
+                    height={160}
+                  />
+                  <Card.Body>
+                    <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                      {course.title}
+                    </Card.Title>
+                    <Card.Text
+                      className="wd-dashboard-course-description overflow-hidden"
+                      style={{ height: "100px" }}
+                    >
+                      {course.description}
+                    </Card.Text>
+                    <Button variant="primary">Go</Button>
+                  </Card.Body>
+                </Link>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
-);}
+    </div>
+  );
+}

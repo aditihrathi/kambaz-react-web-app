@@ -11,6 +11,7 @@ import Zindex from "./Zindex.tsx";
 import Float from "./Float.tsx";
 import GridLayout from "./GridLayout.tsx";
 import Flex from "./Flex.tsx";
+import ReactIconsSampler from "./ReactIcons.tsx";
 
 export default function Lab2() {
   return (
@@ -101,5 +102,8 @@ This heading has same style as paragraph above
         </div>
         <div id="wd-css-flex">
           <Flex />
+        </div>
+        <div id="wd-react-icons-sampler" className="mb-4">
+          <ReactIconsSampler />
         </div>
     </div>);}

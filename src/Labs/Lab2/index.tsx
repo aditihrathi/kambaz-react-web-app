@@ -1,6 +1,10 @@
 import "./index.css";
 import ForegroundColors from "./ForegroundColors.tsx";
 import BackgroundColors from './BackgroundColors.tsx';
+import Borders from "./Borders.tsx";
+import Padding from "./Padding.tsx";
+import Margins from "./Margins.tsx";
+import Corners from "./Corners.tsx";
 
 export default function Lab2() {
   return (
@@ -62,4 +66,16 @@ This heading has same style as paragraph above
       <div id="wd-css-bg-colors">
         <BackgroundColors />
       </div>
+      <div id="wd-css-borders">
+        <Borders />
+      </div>
+      <div id="wd-css-paddings">
+        <Padding />
+      </div>
+      <div id="wd-css-margin">
+        <Margins />
+        </div>
+        <div id="wd-css-corners">
+          <Corners />
+          </div>
     </div>);}

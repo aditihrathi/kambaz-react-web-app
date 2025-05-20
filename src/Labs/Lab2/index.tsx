@@ -12,10 +12,17 @@ import Float from "./Float.tsx";
 import GridLayout from "./GridLayout.tsx";
 import Flex from "./Flex.tsx";
 import ReactIconsSampler from "./ReactIcons.tsx";
+import { Container } from "react-bootstrap";
+import BootstrapGrids from "./BootstrapGrids.tsx";
+import ScreenSizeLabel from "./ScreenSizeLabel.tsx";
+import BootstrapTables from "./BootstrapTables.tsx";
+import BootstrapLists from "./BootstrapLists.tsx";
+import BootstrapForms from "./BootstrapForms.tsx";
+import BootstrapNavigation from "./bootstrapNavigation.tsx";
 
 export default function Lab2() {
   return (
-    <div id="wd-lab2">
+    <Container>
       <h2>Lab 2 - Cascading Style Sheets</h2>
       <h3>Styling with the STYLE attribute</h3>
       <p>
@@ -106,4 +113,22 @@ This heading has same style as paragraph above
         <div id="wd-react-icons-sampler" className="mb-4">
           <ReactIconsSampler />
         </div>
-    </div>);}
+        <div id="wd-bs-grid-system">
+          <BootstrapGrids />
+        </div>
+        <div id="wd-screen-size-label">
+          <ScreenSizeLabel />
+        </div>
+        <div id="wd-css-styling-tables">
+          <BootstrapTables />
+        </div>
+        <div id="wd-css-styling-lists">
+          <BootstrapLists />
+          </div>
+        <div id="wd-css-styling-dropdowns">
+          <BootstrapForms />
+          </div>
+          <div id="wd-css-navigating-with-tabs">
+            <BootstrapNavigation />
+            </div>
+    </Container>);}

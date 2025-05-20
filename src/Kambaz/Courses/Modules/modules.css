@@ -12,3 +12,21 @@
   font-size: 1rem;
   line-height: 1;
 }
+.wd-lesson {
+  border-left: 3px solid green !important;
+  background-color: white;
+}
+
+.border-gray {
+  border: 1px solid lightgray;
+}
+
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+}
+
+

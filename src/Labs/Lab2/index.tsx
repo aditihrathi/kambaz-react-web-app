@@ -5,6 +5,12 @@ import Borders from "./Borders.tsx";
 import Padding from "./Padding.tsx";
 import Margins from "./Margins.tsx";
 import Corners from "./Corners.tsx";
+import Dimensions from "./Dimensions.tsx";
+import Positions from "./Positions.tsx";
+import Zindex from "./Zindex.tsx";
+import Float from "./Float.tsx";
+import GridLayout from "./GridLayout.tsx";
+import Flex from "./Flex.tsx";
 
 export default function Lab2() {
   return (
@@ -77,5 +83,23 @@ This heading has same style as paragraph above
         </div>
         <div id="wd-css-corners">
           <Corners />
+        </div>
+        <div id="wd-css-dimensions">
+            <Dimensions />
+        </div>
+        <div id="wd-css-position-absolute">
+        <Positions />
+        </div>
+        <div id="wd-z-index">
+          <Zindex />
           </div>
+        <div id="wd-float-divs">
+          <Float />
+          </div>
+        <div id="wd-css-grid-layout">
+          <GridLayout />
+        </div>
+        <div id="wd-css-flex">
+          <Flex />
+        </div>
     </div>);}

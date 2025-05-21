@@ -3,12 +3,10 @@ import KambazNavigation from "../../Navigation";
 import CourseNavigation from "../Navigation";
 import CourseStatus from "./Status";
 import Modules from "../Modules";
-import TopBar from "/TopBar";
 
 export default function CourseHome() {
   return (
     <div id="wd-course-home">
-      <TopBar courseName="CS5610 SUM 25" screenTitle="Home" />
       <Row className="m-0">
         <Col md={1} className="collapse d-md-block p-0" id="wd-kambaz-navigation">
           <KambazNavigation />

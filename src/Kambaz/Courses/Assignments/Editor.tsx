@@ -1,122 +1,102 @@
+import { Form, Button, Row, Col } from "react-bootstrap";
+
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-      <textarea id="wd-description">
-        The assignment is available online.
-        Submit a link to the landing page of your Web application running on Netlify.
-         The landing page should be the Kambaz application with a link to the Lab exercises.
-         Lab 1 should be the landing page of the Lab exercises and should include the following:
+    <div className="p-4">
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Assignment Name</Form.Label>
+          <Form.Control type="text" value="A1 - ENV + HTML" />
+        </Form.Group>
+
+        <Form.Group className="mb-4">
+          <Form.Control
+            as="textarea"
+            rows={6}
+            defaultValue={`The assignment is available online.
+Submit a link to the landing page of your Web application running on Netlify.
+
+The landing page should include the following:
 - Your full name and section
 - Links to each of the lab assignments
 - Link to the Kambaz application
 - Links to all relevant source code repositories
-- The Kambaz application should include a link to navigate back to the landing page.
-      </textarea>
-      <br />
-      <table>
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" value={100} />
-          </td>
-        </tr>
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-group">Assignment Group</label>
-          </td>
-          <td>
-            <select id="wd-group"> 
-            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-            <option value="EXAMS">EXAMS</option>
-            <option value="QUIZZES">QUIZZES</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as"> 
-            <option value="PER">Percent</option>
-            <option value="POINT">Points</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select id="wd-submission-type"> 
-            <option value="ONLINE">Online</option>
-            <option value="NA">No Submission</option>
-            <option value="IRL">In Person</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-        <td align="right" valign="top">
-          </td>
-          <td>
-          <label>Online Submission Options:</label><br/>
 
-<input type="checkbox" name="sub-ops" id="wd-text-entry"/>
-<label htmlFor="wd-text-entry">Text Entry</label><br/>
+The Kambaz application should include a link to navigate back to the landing page.`}
+          />
+        </Form.Group>
 
-<input type="checkbox" name="sub-ops" id="wd-website-url"/>
-<label htmlFor="wd-website-url">Website URL</label><br/>
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Points</Form.Label></Col>
+          <Col><Form.Control type="number" defaultValue={100} /></Col>
+        </Row>
 
-<input type="checkbox" name="sub-ops" id="wd-media-recordings"/>
-<label htmlFor="wd-media-recordings">Media Recordings</label><br/>
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Assignment Group</Form.Label></Col>
+          <Col>
+            <Form.Select>
+              <option>ASSIGNMENTS</option>
+              <option>EXAMS</option>
+              <option>QUIZZES</option>
+            </Form.Select>
+          </Col>
+        </Row>
 
-<input type="checkbox" name="sub-ops" id="wd-student-annotation"/>
-<label htmlFor="wd-student-annotation">Student Annotation</label><br/>
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Display Grade as</Form.Label></Col>
+          <Col>
+            <Form.Select>
+              <option>Percent</option>
+              <option>Points</option>
+            </Form.Select>
+          </Col>
+        </Row>
 
-<input type="checkbox" name="sub-ops" id="wd-file-upload"/>
-<label htmlFor="wd-file-upload">File Upload</label><br/>
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Submission Type</Form.Label></Col>
+          <Col>
+            <Form.Select>
+              <option>Online</option>
+              <option>No Submission</option>
+              <option>In Person</option>
+            </Form.Select>
 
-          </td>
-        </tr>     
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-assign-to">Assign To</label>
-          </td>
-          <td>
-            <select id="wd-assign-to"> 
-            <option value="ALL">Everyone</option>
-            <option value="FAIL">Failing Students</option>
-            </select>            
-          </td>
-        </tr>      
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-due-date">Due</label>
-          </td>
-          <td>
-          <input id="wd-due-date" type="date" value="2023-10-27"/>         
-          </td>
-        </tr>
-        <tr>
-        <td align="right" valign="top">
-            <label htmlFor="wd-available-from">Available From</label>
-          </td>
-          <td>
-            <input id="wd-available-from" type="date" value="2023-10-23"/>         
-          </td>
-          <td align="right" valign="top">
-          <label htmlFor="wd-available-until">Available Until</label>
-          </td>
-          <td>
-            <input id="wd-available-until" type="date" value="2023-10-30"/>         
-          </td>  
-          </tr>
-        </table>
-        <br />
-        <button id="wd-save">Save</button> <button id="wd-cancel">Cancel</button>
+            <Form.Label className="mt-3">Online Submission Options:</Form.Label>
+            <Form.Check type="checkbox" label="Text Entry" />
+            <Form.Check type="checkbox" label="Website URL" defaultChecked />
+            <Form.Check type="checkbox" label="Media Recordings" />
+            <Form.Check type="checkbox" label="Student Annotation" />
+            <Form.Check type="checkbox" label="File Uploads" />
+          </Col>
+        </Row>
+
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Assign To</Form.Label></Col>
+          <Col>
+            <Form.Select>
+              <option>Everyone</option>
+              <option>Failing Students</option>
+            </Form.Select>
+          </Col>
+        </Row>
+
+        <Row className="mb-3">
+          <Col md={2}><Form.Label>Due</Form.Label></Col>
+          <Col md={4}><Form.Control type="date" defaultValue="2023-10-27" /></Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={2}><Form.Label>Available From</Form.Label></Col>
+          <Col md={4}><Form.Control type="date" defaultValue="2023-10-23" /></Col>
+          <Col md={2}><Form.Label>Available Until</Form.Label></Col>
+          <Col md={4}><Form.Control type="date" defaultValue="2023-10-30" /></Col>
+        </Row>
+
+        <div className="d-flex justify-content-end gap-2">
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="danger">Save</Button>
+        </div>
+      </Form>
     </div>
-);}
+  );
+}

@@ -40,7 +40,7 @@
     "endDate": "2023-05-15",
     "department": "D134",
     "credits": 3,
-    "image":"public/images/orgo.jpg",
+    "image":"https://i.ytimg.com/vi/B_ketdzJtY8/maxresdefault.jpg",
     "description": "Organic Chemistry is an in-depth course that explores the structure, properties, composition, and reactions of organic compounds and materials. The course covers various topics including hydrocarbons, functional groups, stereochemistry, and organic synthesis techniques. Students will learn about the mechanisms of organic reactions, spectroscopic methods for structure determination, and the role of organic chemistry in biological systems. Emphasis is placed on problem-solving and laboratory skills, preparing students for advanced studies in chemistry, medicine, and related fields."
   },
   {
@@ -73,7 +73,7 @@
     "endDate": "2023-05-15",
     "department": "Languages",
     "credits": 3,
-    "image":"public/images/*.jpg",
+    "image":"https://acutrans.com/wp-content/uploads/2020/07/languages-around-the-world-1024x710.png",
     "description": "This course offers an exploration of the ancient languages and scripts found throughout Middle-earth, including Elvish (Sindarin and Quenya), Dwarvish (Khuzdul), and the Black Speech of Mordor. Students will learn the historical and cultural contexts of these languages, their linguistic structures, and their usage in various inscriptions and texts. Emphasis is on understanding the philological aspects and the role of language in shaping Middle-earth's history and lore.",
     "author": "654f9ec2ea7ead465908d1e3"
   },
@@ -85,7 +85,7 @@
     "endDate": "2023-05-15",
     "department": "Political Studies",
     "credits": 4,
-    "image":"public/images/phil.jpg",
+    "image":"https://prod-cms.scouts.org.uk/media/11426/giants-wizards-and-elves-masked.jpg?width=800&height=450&v=1d9becea2bf5990",
     "description": "This course explores the complex relationships and diplomatic interactions among the different races of Middle-earth: Elves, Men, Dwarves, and Wizards. Topics include the study of historical alliances, conflicts, and the role of leadership and wisdom in maintaining peace. Students will engage in discussions and case studies on key events in Middle-earth's history, such as the Council of Elrond and the War of the Ring, to understand the principles of diplomacy and conflict resolution in a multi-species context.",
     "author": "654f9ec2ea7ead465908d1e3"
   }

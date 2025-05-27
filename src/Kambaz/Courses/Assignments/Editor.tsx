@@ -1,12 +1,17 @@
+import { useParams, Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
+
   return (
     <div className="p-4">
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Assignment Name</Form.Label>
-          <Form.Control type="text" value="A1 - ENV + HTML" />
+          <Form.Control type="text" value={assignment?.title || ""} />
         </Form.Group>
 
         <Form.Group className="mb-4">
@@ -93,8 +98,12 @@ The Kambaz application should include a link to navigate back to the landing pag
         </Row>
 
         <div className="d-flex justify-content-end gap-2">
-          <Button variant="secondary">Cancel</Button>
-          <Button variant="danger">Save</Button>
+          <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-secondary">
+            Cancel
+          </Link>
+          <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-danger">
+            Save
+          </Link>
         </div>
       </Form>
     </div>

@@ -1,110 +1,150 @@
-import { useParams, Link } from "react-router-dom";
-import { Form, Row, Col } from "react-bootstrap";
-import * as db from "../../Database";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Form, Row, Col, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { addAssignment, updateAssignment } from "./reducer";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((a: any) => a._id === aid);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const assignments = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
+
+  const isEdit = Boolean(aid);
+  const existing = assignments.find((a: any) => a._id === aid);
+
+  const [assignment, setAssignment] = useState<any>(
+    existing || {
+      _id: uuidv4(),
+      course: cid,
+      title: "",
+      description: "",
+      points: 100,
+      due: "2023-10-27",
+      availableFrom: "2023-10-23",
+      availableUntil: "2023-10-30",
+    }
+  );
+
+  useEffect(() => {
+    if (isEdit && existing) {
+      setAssignment(existing);
+    }
+  }, [isEdit, existing]);
+
+  const handleSave = () => {
+    if (isEdit) {
+      dispatch(updateAssignment(assignment));
+    } else {
+      dispatch(addAssignment(assignment));
+    }
+    navigate(`/Kambaz/Courses/${cid}/Assignments`);
+  };
 
   return (
     <div className="p-4">
+      <h3>{isEdit ? "Assignment Details" : "Create Assignment"}</h3>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Assignment Name</Form.Label>
-          <Form.Control type="text" value={assignment?.title || ""} />
+          <Form.Control
+            type="text"
+            value={assignment.title}
+            onChange={(e) =>
+              setAssignment({ ...assignment, title: e.target.value })
+            }
+            disabled={!isFaculty}
+          />
         </Form.Group>
 
         <Form.Group className="mb-4">
+          <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
             rows={6}
-            defaultValue={`The assignment is available online.
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kambaz application
-- Links to all relevant source code repositories
-
-The Kambaz application should include a link to navigate back to the landing page.`}
+            value={assignment.description}
+            onChange={(e) =>
+              setAssignment({ ...assignment, description: e.target.value })
+            }
+            disabled={!isFaculty}
           />
         </Form.Group>
 
         <Row className="mb-3">
           <Col md={2}><Form.Label>Points</Form.Label></Col>
-          <Col><Form.Control type="number" defaultValue={100} /></Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={2}><Form.Label>Assignment Group</Form.Label></Col>
           <Col>
-            <Form.Select>
-              <option>ASSIGNMENTS</option>
-              <option>EXAMS</option>
-              <option>QUIZZES</option>
-            </Form.Select>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={2}><Form.Label>Display Grade as</Form.Label></Col>
-          <Col>
-            <Form.Select>
-              <option>Percent</option>
-              <option>Points</option>
-            </Form.Select>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={2}><Form.Label>Submission Type</Form.Label></Col>
-          <Col>
-            <Form.Select>
-              <option>Online</option>
-              <option>No Submission</option>
-              <option>In Person</option>
-            </Form.Select>
-
-            <Form.Label className="mt-3">Online Submission Options:</Form.Label>
-            <Form.Check type="checkbox" label="Text Entry" />
-            <Form.Check type="checkbox" label="Website URL" defaultChecked />
-            <Form.Check type="checkbox" label="Media Recordings" />
-            <Form.Check type="checkbox" label="Student Annotation" />
-            <Form.Check type="checkbox" label="File Uploads" />
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={2}><Form.Label>Assign To</Form.Label></Col>
-          <Col>
-            <Form.Select>
-              <option>Everyone</option>
-              <option>Failing Students</option>
-            </Form.Select>
+            <Form.Control
+              type="number"
+              value={assignment.points}
+              onChange={(e) =>
+                setAssignment({
+                  ...assignment,
+                  points: parseInt(e.target.value),
+                })
+              }
+              disabled={!isFaculty}
+            />
           </Col>
         </Row>
 
         <Row className="mb-3">
           <Col md={2}><Form.Label>Due</Form.Label></Col>
-          <Col md={4}><Form.Control type="date" defaultValue="2023-10-27" /></Col>
+          <Col md={4}>
+            <Form.Control
+              type="date"
+              value={assignment.due}
+              onChange={(e) =>
+                setAssignment({ ...assignment, due: e.target.value })
+              }
+              disabled={!isFaculty}
+            />
+          </Col>
         </Row>
 
         <Row className="mb-4">
           <Col md={2}><Form.Label>Available From</Form.Label></Col>
-          <Col md={4}><Form.Control type="date" defaultValue="2023-10-23" /></Col>
+          <Col md={4}>
+            <Form.Control
+              type="date"
+              value={assignment.availableFrom}
+              onChange={(e) =>
+                setAssignment({ ...assignment, availableFrom: e.target.value })
+              }
+              disabled={!isFaculty}
+            />
+          </Col>
           <Col md={2}><Form.Label>Available Until</Form.Label></Col>
-          <Col md={4}><Form.Control type="date" defaultValue="2023-10-30" /></Col>
+          <Col md={4}>
+            <Form.Control
+              type="date"
+              value={assignment.availableUntil}
+              onChange={(e) =>
+                setAssignment({ ...assignment, availableUntil: e.target.value })
+              }
+              disabled={!isFaculty}
+            />
+          </Col>
         </Row>
 
-        <div className="d-flex justify-content-end gap-2">
-          <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-secondary">
-            Cancel
-          </Link>
-          <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-danger">
-            Save
-          </Link>
-        </div>
+        {isFaculty && (
+          <div className="d-flex justify-content-end gap-2">
+            <Button
+              variant="secondary"
+              onClick={() =>
+                navigate(`/Kambaz/Courses/${cid}/Assignments`)
+              }
+            >
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleSave}>
+              Save
+            </Button>
+          </div>
+        )}
       </Form>
     </div>
   );

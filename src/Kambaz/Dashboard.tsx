@@ -16,7 +16,7 @@ export default function Dashboard() {
     _id: uuidv4(),
     name: "",
     description: "",
-    image: "https://picsum.photos/300/200",
+    image: "/images/reactjs.jpg",
   });
 
   const [showAllCourses, setShowAllCourses] = useState(false);

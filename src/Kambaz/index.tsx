@@ -10,23 +10,12 @@ import Session from "./Account/Session";
 import * as userClient from "./Courses/client.ts";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import * as courseClient from "./Courses/client";
 
 export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
-  const addNewCourse = async (course: any) => {
-    const newCourse = await userClient.createCourse(course);
-    setCourses([...courses, newCourse]);
-  };
 
-  const updateCourse = async (course: any) => {
-    await courseClient.updateCourse(course);
-    setCourses(
-      courses.map((c) => (c._id === course._id ? course : c))
-    );
-  };
 
   const fetchCourses = async () => {
     try {
@@ -41,10 +30,6 @@ export default function Kambaz() {
     fetchCourses();
   }, [currentUser]);
 
-  const deleteCourse = async (courseId: string) => {
-    await courseClient.deleteCourse(courseId);
-    setCourses(courses.filter((course) => course._id !== courseId));
-  };
 
   return (
     <Session>

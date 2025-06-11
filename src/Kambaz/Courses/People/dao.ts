@@ -1,4 +1,4 @@
-const Database = require("../../Database/index.js");
+const Database: any = require("../../Database/index.js");
 
 export const findPeopleInCourse = (courseId: string) => {
   return Database.enrollments

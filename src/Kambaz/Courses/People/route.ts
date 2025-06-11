@@ -1,9 +1,15 @@
 import * as dao from "./dao.js";
+import express from "express";
 
+const router = express.Router();
 
+router.get("/api/people", (_req, res) => {
+  const people = dao.findAllUsers();
+  res.json(people);
+});
 
 export default function UserRoutes(app: { get: (arg0: string, arg1: { (req: any, res: any): Promise<void>; (req: any, res: any): Promise<void>; }) => void; post: (arg0: string, arg1: (req: any, res: any) => Promise<void>) => void; put: (arg0: string, arg1: (req: any, res: any) => Promise<void>) => void; delete: (arg0: string, arg1: (req: any, res: any) => Promise<void>) => void; }) {
-  app.get("/api/users", async (req: any, res: { send: (arg0: any) => void; }) => {
+  app.get("/api/users", async (_req: any, res: { send: (arg0: any) => void; }) => {
     const users = await dao.findAllUsers();
     res.send(users);
   });

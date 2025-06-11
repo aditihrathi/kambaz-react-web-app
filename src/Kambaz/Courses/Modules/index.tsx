@@ -7,9 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 import { Button, ListGroup, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-const state = useSelector((state: any) => state);
-console.log("💡 FULL REDUX STATE:", state);
-
 
 export default function Modules() {
   const { courseId } = useParams();

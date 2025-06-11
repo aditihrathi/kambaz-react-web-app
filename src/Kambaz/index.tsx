@@ -6,9 +6,12 @@ import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import Account from "./Account"; 
 import ProtectedRoute from "./Account/ProtectedRoute";
+import Session from "./Account/Session";
+
 
 export default function Kambaz() {
   return (
+    <Session>
     <div>
       <div
         id="wd-kambaz-navigation"
@@ -45,5 +48,6 @@ export default function Kambaz() {
         </div>
       </div>
     </div>
-  );
+    </Session>
+);
 }

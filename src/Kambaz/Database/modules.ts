@@ -1,4 +1,4 @@
-export default [
+const modules = [
   {
     "_id": "M101",
     "name": "Introduction to Rocket Propulsion",
@@ -624,3 +624,11 @@ export default [
     ]
   }
 ];
+
+export function findModules(courseId: string) {
+  return modules.filter((m) => m.course === courseId);
+}
+
+export function findModuleById(moduleId: string) {
+  return modules.find((m) => m._id === moduleId);
+}

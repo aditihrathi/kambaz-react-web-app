@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 export default function Modules() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
-  const modules = useSelector((state: any) => state.modules.modules);
+  const modules = useSelector((state: any) => state.modulesReducer.modules);
   const [newModule, setNewModule] = useState({ name: "", description: "" });
 
   const loadModules = async () => {

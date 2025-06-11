@@ -625,6 +625,8 @@ const modules = [
   }
 ];
 
+export default modules;
+
 export function findModules(courseId: string) {
   return modules.filter((m) => m.course === courseId);
 }

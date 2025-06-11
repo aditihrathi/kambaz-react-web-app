@@ -1,49 +1,46 @@
-import axios from "axios";
-const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
-const COURSES_API = `${REMOTE_SERVER}/api/courses`;
-export const USERS_API = `${REMOTE_SERVER}/api/users`;
+import axios from 'axios';
 
-const axiosWithCredentials = axios.create({ withCredentials: true });
+// Create axios instance with proper cookie configuration
+const api = axios.create({
+  baseURL: 'https://kambaz-node-server-app-7xbg.onrender.com',
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+// Add request interceptor to ensure cookies are always sent
+api.interceptors.request.use((config) => {
+  config.withCredentials = true;
+  return config;
+});
+
+export const signin = async (credentials: any) => {
+  const response = await api.post('/api/users/signin', credentials);
+  return response.data;
+};
+
+export const profile = async () => {
+  const response = await api.get('/api/users/profile');
+  return response.data;
+};
+
 export const findMyCourses = async () => {
-  const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
-  return data;
-};
-
-export const fetchAllCourses = async () => {
-  const { data } = await axios.get(COURSES_API);
-  return data;
-};
-
-export const createCourse = async (course: any) => {
-  const { data } = await axios.post(`${COURSES_API}`, course);
-  return data;
-};
-
-export const deleteCourse = async (id: string) => {
-  const { data } = await axios.delete(`${COURSES_API}/${id}`);
-  return data;
-};
-
-export const updateCourse = async (course: any) => {
-  const { data } = await axios.put(`${COURSES_API}/${course._id}`, course);
-  return data;
-};
-
-export const findModulesForCourse = async (courseId: string) => {
-  const response = await axios
-    .get(`${COURSES_API}/${courseId}/modules`);
-  return response.data;
-};
-export const createModuleForCourse = async (courseId: string, module: any) => {
-  const response = await axios.post(
-    `${COURSES_API}/${courseId}/modules`,
-    module
-  );
+  const response = await api.get('/api/users/current/courses');
   return response.data;
 };
 
+export const updateProfile = async (profileData: any) => {
+  const response = await api.put('/api/users/profile', profileData);
+  return response.data;
+};
 
+export const signout = async () => {
+  const response = await api.post('/api/users/signout');
+  return response.data;
+};
 
-
-
-
+export const signup = async (userData: any) => {
+  const response = await api.post('/api/users/signup', userData);
+  return response.data;
+};

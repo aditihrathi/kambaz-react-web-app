@@ -11,11 +11,16 @@ export default function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signin = async () => {
-    const user =  await client.signin(credentials);
+    const user = await client.signin(credentials);
+    console.log("=== SIGNIN DEBUG ===");
+    console.log("User from server:", user);
+    console.log("User role from server:", user.role);
+    console.log("==================");
+    
     if (!user) return;
     dispatch(setCurrentUser(user));
     navigate("/Kambaz/Dashboard");
-  };
+  }
   return (
     <div className="p-5 w-100" style={{ maxWidth: 300 }}>
       <h1 className="mb-4">Sign in</h1>

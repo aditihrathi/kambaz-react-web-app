@@ -1,30 +1,27 @@
 import * as db from "../Database/index.js";
 import { v4 as uuidv4 } from "uuid";
 
-let { users } = db;
+let { users, courses, enrollments } = db;
 
 export const createUser = (user) => {
   const newUser = { ...user, _id: uuidv4() };
-  users = [...users, newUser];
+  users.push(newUser);
   return newUser;
 };
 
 export const findUserByUsername = (username) => 
-  users.find((user) => user.username === username);
+  users.find(user => user.username === username);
 
 export const findUserByCredentials = (username, password) => 
-  users.find((user) => user.username === username && user.password === password);
+  users.find(user => user.username === username && user.password === password);
 
-export const findUserById = (userId) => 
-  users.find((user) => user._id === userId);
+export const findUserById = (id) => 
+  users.find(user => user._id === id);
 
-export const findAllUsers = () => users;
+export const findCoursesByFaculty = (facultyId) => 
+  courses.filter(course => course.instructor === facultyId);
 
-export const deleteUser = (userId) => {
-  users = users.filter((user) => user._id !== userId);
-};
-
-export const updateUser = (userId, userUpdates) => {
-  users = users.map((user) => user._id === userId ? { ...user, ...userUpdates } : user);
-  return users.find((user) => user._id === userId);
+export const findCoursesForStudent = (studentId) => {
+  const studentEnrollments = enrollments.filter(e => e.user === studentId);
+  return studentEnrollments.map(e => courses.find(c => c._id === e.course));
 };

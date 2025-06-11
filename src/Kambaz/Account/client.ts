@@ -1,29 +1,47 @@
-import axios from "axios";
-const axiosWithCredentials = axios.create({ withCredentials: true });
-export const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
-export const USERS_API = `${REMOTE_SERVER}/api/users`;
+import axios from 'axios';
+
+// Configure axios to always send cookies
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'https://kambaz-node-server-app-7xbg.onrender.com';
+
 export const signin = async (credentials: any) => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
+  const response = await axios.post('/api/users/signin', credentials, {
+    withCredentials: true  // Explicitly set for this request
+  });
   return response.data;
-};
-export const profile = async () => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/profile`);
-  return response.data;
-};
-export const signup = async (user: any) => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/signup`, user);
-  return response.data;
-};
-export const signout = async () => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/signout`);
-  return response.data;
-};
-export const updateUser = async (user: any) => {
-  const response = await axiosWithCredentials.put(`${USERS_API}/${user._id}`, user);
-  return response.data;
-};
-export const createCourse = async (course: any) => {
-  const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses`, course);
-  return data;
 };
 
+export const profile = async () => {
+  const response = await axios.get('/api/users/profile', {
+    withCredentials: true
+  });
+  return response.data;
+};
+
+export const findMyCourses = async () => {
+  const response = await axios.get('/api/users/current/courses', {
+    withCredentials: true
+  });
+  return response.data;
+};
+
+export const updateProfile = async (profileData: any) => {
+  const response = await axios.put('/api/users/profile', profileData, {
+    withCredentials: true
+  });
+  return response.data;
+};
+
+export const signout = async () => {
+  const response = await axios.post('/api/users/signout', {}, {
+    withCredentials: true
+  });
+  return response.data;
+};
+
+export const signup = async (userData: any) => {
+  const response = await axios.post('/api/users/signup', userData, {
+    withCredentials: true
+  });
+  return response.data;
+};

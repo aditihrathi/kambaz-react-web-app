@@ -1,36 +1,143 @@
 import * as dao from "./dao.js";
-import * as modulesDao from "../Courses/Modules/dao.js";
-export default function CourseRoutes(app) {
-  app.get("/api/courses/:courseId/modules", (req, res) => {
-    const { courseId } = req.params;
-    const modules = modulesDao.findModulesForCourse(courseId);
-    res.json(modules);
-  });
-  app.put("/api/courses/:courseId", (req, res) => {
-    const { courseId } = req.params;
-    const courseUpdates = req.body;
-    const status = dao.updateCourse(courseId, courseUpdates);
-    res.send(status);
-  });
+import * as courseDao from "../Courses/dao.js";
+import * as enrollmentsDao from "../Enrollments/dao.js";
 
-  app.get("/api/courses", (req, res) => {
-    const courses = dao.findAllCourses();
-    res.send(courses);
-  });
-  app.delete("/api/courses/:courseId", (req, res) => {
-    const { courseId } = req.params;
-    const status = dao.deleteCourse(courseId);
-    res.send(status);
-  });
-  app.post("/api/courses/:courseId/modules", (req, res) => {
-    const { courseId } = req.params;
-    const module = {
-      ...req.body,
-      course: courseId,
-    };
-    const newModule = modulesDao.createModule(module);
-    res.send(newModule);
-  });
+export default function UserRoutes(app) {
+  
+  // Get courses for enrolled user (different logic for faculty vs students)
+  const findCoursesForEnrolledUser = (req, res) => {
+    let { userId } = req.params;
+    if (userId === "current") {
+      const currentUser = req.session["currentUser"];
+      if (!currentUser) {
+        res.sendStatus(401);
+        return;
+      }
+      userId = currentUser._id;
+      
+      // Different behavior based on user role
+      let courses;
+      if (currentUser.role === "FACULTY") {
+        // Faculty see all courses they're enrolled in (as instructors)
+        // You could also modify this to show ALL courses for faculty
+        courses = courseDao.findCoursesForEnrolledUser(userId);
+        // OR for faculty to see all courses:
+        // courses = courseDao.findAllCourses();
+      } else {
+        // Students see only courses they're enrolled in
+        courses = courseDao.findCoursesForEnrolledUser(userId);
+      }
+      
+      res.json(courses);
+      return;
+    }
+    
+    // For specific user ID requests
+    const courses = courseDao.findCoursesForEnrolledUser(userId);
+    res.json(courses);
+  };
 
+  // Create course for current user (only faculty should be able to do this)
+  const createCourse = (req, res) => {
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
+    
+    // Check if user is faculty
+    if (currentUser.role !== "FACULTY") {
+      res.status(403).json({ message: "Only faculty can create courses" });
+      return;
+    }
+    
+    const newCourse = courseDao.createCourse(req.body);
+    enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
+    res.json(newCourse);
+  };
 
+  // ... other route handlers (signup, signin, profile, etc.) ...
+  
+  const signup = (req, res) => {
+    const user = dao.findUserByUsername(req.body.username);
+    if (user) {
+      res.status(400).json({ message: "Username already taken" });
+      return;
+    }
+    const currentUser = dao.createUser(req.body);
+    req.session["currentUser"] = currentUser;
+    res.json(currentUser);
+  };
+
+  const signin = (req, res) => {
+    const { username, password } = req.body;
+    const currentUser = dao.findUserByCredentials(username, password);
+    if (currentUser) {
+      req.session["currentUser"] = currentUser;
+      res.json(currentUser);
+    } else {
+      res.status(401).json({ message: "Unable to login. Try again later." });
+    }
+  };
+
+  const profile = (req, res) => {
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
+    res.json(currentUser);
+  };
+
+  const signout = (req, res) => {
+    req.session.destroy();
+    res.sendStatus(200);
+  };
+
+  const updateUser = (req, res) => {
+    const userId = req.params.userId;
+    const userUpdates = req.body;
+    const updatedUser = dao.updateUser(userId, userUpdates);
+    req.session["currentUser"] = updatedUser;
+    res.json(updatedUser);
+  };
+
+  const findAllUsers = (req, res) => {
+    const users = dao.findAllUsers();
+    res.json(users);
+  };
+
+  const findUserById = (req, res) => {
+    const { userId } = req.params;
+    const user = dao.findUserById(userId);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  };
+
+  const deleteUser = (req, res) => {
+    const { userId } = req.params;
+    const result = dao.deleteUser(userId);
+    res.json(result);
+  };
+
+  const createUser = (req, res) => {
+    const newUser = dao.createUser(req.body);
+    res.json(newUser);
+  };
+
+  // Register routes
+  app.post("/api/users/signup", signup);
+  app.post("/api/users/signin", signin);
+  app.post("/api/users/profile", profile);
+  app.post("/api/users/signout", signout);
+  app.put("/api/users/:userId", updateUser);
+  app.get("/api/users", findAllUsers);
+  app.get("/api/users/:userId", findUserById);
+  app.delete("/api/users/:userId", deleteUser);
+  app.post("/api/users", createUser);
+  app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
+  app.post("/api/users/current/courses", createCourse);
 }

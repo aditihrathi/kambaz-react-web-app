@@ -1,101 +1,119 @@
-import { useNavigate } from "react-router-dom";
+// src/Kambaz/Account/Profile.tsx
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentUser } from "./reducer";
-import { FormControl, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import * as client from "./client";
-
+import { setCurrentUser } from "./reducer";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  
-  const updateProfile = async () => {
-    const updatedProfile = await client.updateUser(profile);
-    dispatch(setCurrentUser(updatedProfile));
-  };
 
   const fetchProfile = () => {
     if (!currentUser) return navigate("/Kambaz/Account/Signin");
     setProfile(currentUser);
   };
 
-  const signout = async() => {
-    await client.signout();
-    dispatch(setCurrentUser(null));
-    navigate("/Kambaz/Account/Signin");
+  const updateProfile = async () => {
+    try {
+      const updatedProfile = await client.updateProfile(profile);
+      dispatch(setCurrentUser(updatedProfile));
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
+
+  const signout = async () => {
+    try {
+      await client.signout();
+      dispatch(setCurrentUser(null));
+      navigate("/Kambaz/Account/Signin");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
   };
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [currentUser]);
 
   return (
-    <div className="wd-profile-screen">
+    <div id="wd-profile-screen">
       <h3>Profile</h3>
       {profile && (
         <div>
-          <FormControl
+          <Form.Control
             defaultValue={profile.username}
-            placeholder="Username"
             id="wd-username"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+            placeholder="Username"
           />
-          <FormControl
+          <Form.Control
             defaultValue={profile.password}
-            placeholder="Password"
-            type="password"
             id="wd-password"
             className="mb-2"
+            type="password"
             onChange={(e) => setProfile({ ...profile, password: e.target.value })}
+            placeholder="Password"
           />
-          <FormControl
+          <Form.Control
             defaultValue={profile.firstName}
-            placeholder="First Name"
             id="wd-firstname"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
+            placeholder="First Name"
           />
-          <FormControl
+          <Form.Control
             defaultValue={profile.lastName}
-            placeholder="Last Name"
             id="wd-lastname"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+            placeholder="Last Name"
           />
-          <FormControl
+          <Form.Control
             defaultValue={profile.dob}
-            placeholder="Date of Birth"
-            type="date"
             id="wd-dob"
             className="mb-2"
+            type="date"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
           />
-          <FormControl
+          <Form.Control
             defaultValue={profile.email}
-            placeholder="Email"
             id="wd-email"
             className="mb-2"
+            type="email"
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+            placeholder="Email"
           />
-          <select
+          <Form.Select
+            value={profile.role || "USER"}
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-            className="form-control mb-2"
+            className="mb-2"
             id="wd-role"
-            defaultValue={profile.role}
           >
             <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
-          </select>
-          <button onClick={updateProfile} className="btn btn-primary w-100 mb-2"> Update </button>
-          <Button onClick={signout} className="w-100 mb-2" id="wd-signout-btn">
+          </Form.Select>
+          <button
+            onClick={updateProfile}
+            className="btn btn-primary w-100 mb-2"
+            id="wd-update-profile-btn"
+          >
+            Update
+          </button>
+          <button
+            onClick={signout}
+            className="btn btn-danger w-100 mb-2"
+            id="wd-signout-btn"
+          >
             Sign out
-          </Button>
+          </button>
         </div>
       )}
     </div>

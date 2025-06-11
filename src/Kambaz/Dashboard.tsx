@@ -7,11 +7,13 @@ import { enroll, unenroll } from "./Courses/People/reducer";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Dashboard() {
+  
   const dispatch = useDispatch();
   const courses = useSelector((state: any) => state.coursesReducer);
   const enrollments = useSelector((state: any) => state.enrollmentsReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
+  
   const [course, setCourse] = useState<any>({
     _id: uuidv4(),
     name: "",
@@ -56,7 +58,11 @@ export default function Dashboard() {
   const filteredCourses = showAllCourses
     ? courses
     : courses.filter((c: any) => enrollments[currentUser._id]?.includes(c._id));
-
+    
+    console.log("Current user:", currentUser);
+    console.log("User role:", currentUser?.role);
+    console.log("Is faculty?", isFaculty);
+  
   return (
     <div className="p-4" id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>

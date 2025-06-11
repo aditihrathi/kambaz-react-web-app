@@ -1,7 +1,7 @@
 import assignments from "./assignments.ts";
 import courses from "./courses.ts";
 import enrollments from "./enrollments.ts";
-import modules from "./modules.ts";
+import { findModules, findModuleById } from "./modules";
 import users from "./users.ts";
 
 export {

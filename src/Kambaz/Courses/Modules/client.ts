@@ -1,17 +1,22 @@
 import axios from "axios";
-const API_BASE = "/api/courses";
 
 export const findModules = async (courseId: string) => {
-  const response = await axios.get(`${API_BASE}/${courseId}/modules`);
-  return response.data;
+  const res = await axios.get(`/api/courses/${courseId}/modules`, {
+    withCredentials: true,
+  });
+  return res.data;
 };
 
 export const createModule = async (courseId: string, module: any) => {
-  const response = await axios.post(`${API_BASE}/${courseId}/modules`, module);
-  return response.data;
+  const res = await axios.post(`/api/courses/${courseId}/modules`, module, {
+    withCredentials: true,
+  });
+  return res.data;
 };
 
 export const deleteModule = async (courseId: string, moduleId: string) => {
-  const response = await axios.delete(`${API_BASE}/${courseId}/modules/${moduleId}`);
-  return response.data;
+  const res = await axios.delete(`/api/modules/${moduleId}`, {
+    withCredentials: true,
+  });
+  return res.data;
 };

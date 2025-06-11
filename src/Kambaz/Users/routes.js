@@ -107,8 +107,8 @@ export default function UserRoutes(app) {
   app.post("/api/users/signin", signin);
   app.post("/api/users/login", signin);  // alias for frontend compatibility
   app.post("/api/users/signout", signout);
-  app.post("/api/users/profile", profile);
-
+  app.get("/api/users/profile", profile);
+  app.get("/api/users/current/courses", findCoursesForEnrolledUser);
   app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
   app.post("/api/users/current/courses", createCourse);
 }

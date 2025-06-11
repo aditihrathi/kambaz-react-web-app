@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export default function Kambaz() {
-  const [courses, setCourses] = useState<any[]>([]);
+  const [, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
 

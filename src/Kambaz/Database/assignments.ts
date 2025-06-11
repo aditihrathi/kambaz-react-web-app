@@ -1,4 +1,4 @@
-export default[
+export default [
   { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101", "points": "100", "due": "2024-10-01", "availableFrom": "2024-09-15", "availableUntil": "2024-10-05" },
   { "_id": "A102", "title": "Combustion Analysis", "course": "RS101", "points": "80", "due": "2024-10-08", "availableFrom": "2024-09-22", "availableUntil": "2024-10-12" },
   { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101", "points": "120", "due": "2024-10-15", "availableFrom": "2024-10-01", "availableUntil": "2024-10-19" },

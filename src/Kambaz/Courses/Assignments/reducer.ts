@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import * as db from "../../Database";
+import { assignments } from "../../Database/index.ts";
+
 
 const assignmentsSlice = createSlice({
   name: "assignments",
-  initialState: db.assignments,
+  initialState: assignments,
   reducers: {
     addAssignment: (state, action) => {
       state.push(action.payload);
     },
     deleteAssignment: (state, action) => {
-      return state.filter((a) => a._id !== action.payload);
+      return state.filter((a: { _id: any; }) => a._id !== action.payload);
     },
     updateAssignment: (state, action) => {
-      return state.map((a) =>
+      return state.map((a: any) =>
         a._id === action.payload._id ? action.payload : a
       );
     },

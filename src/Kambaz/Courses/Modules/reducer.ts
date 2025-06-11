@@ -31,7 +31,6 @@ const moduleReducer = (state = initialState, action: any): ModuleState => {
 
 export default moduleReducer;
 
-// ✅ Action creators
 export const setModules = (modules: Module[]) => ({
   type: "modules/setModules",
   payload: modules,

@@ -7,10 +7,10 @@ import enrollmentsReducer from "./Courses/People/reducer";
 
 export const store = configureStore({
   reducer: {
-    modulesReducer,
-    accountReducer,
-    assignmentsReducer, 
-    coursesReducer,
-    enrollmentsReducer,
+    modules: modulesReducer,
+    account: accountReducer,
+    assignments: assignmentsReducer,
+    courses: coursesReducer,
+    enrollments: enrollmentsReducer,
   },
 });

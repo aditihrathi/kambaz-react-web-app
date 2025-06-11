@@ -1,4 +1,3 @@
-// src/Kambaz/Account/Session.tsx - Better error handling for 401s
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as client from "./client";
@@ -15,7 +14,6 @@ export default function Session({ children }: { children: any }) {
       dispatch(setCurrentUser(currentUser));
     } catch (err: any) {
       console.log("Session: No active session found (this is normal if not logged in)");
-      // Don't log this as an error - it's normal when not logged in
       dispatch(setCurrentUser(null));
     }
     setPending(false);

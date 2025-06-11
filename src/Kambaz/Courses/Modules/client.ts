@@ -1,6 +1,7 @@
 import axios from "axios";
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
-const MODULES_API = `${REMOTE_SERVER}/api/modules`;
+const MODULES_API = `${REMOTE_SERVER || ""}/api/modules`;
+
 export const deleteModule = async (moduleId: string) => {
  const response = await axios.delete(`${MODULES_API}/${moduleId}`);
  return response.data; };
@@ -11,7 +12,8 @@ export const deleteModule = async (moduleId: string) => {
 };
 
 export const findModulesForCourse = async (cid: string) => {
-  const response = await axios.get(`/api/courses/${cid}/modules`);
+  const response = await axios.get(`${MODULES_API}/course/${cid}`);
   return response.data;
 };
+
 

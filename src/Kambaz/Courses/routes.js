@@ -128,6 +128,22 @@ export default function UserRoutes(app) {
     res.json(newUser);
   };
 
+  app.get("/api/courses/:courseId/assignments", (req, res) => {
+    const { courseId } = req.params;
+    const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
+    res.json(assignments);
+  });
+
+  app.post("/api/courses/:courseId/assignments", (req, res) => {
+    const { courseId } = req.params;
+    const assignment = {
+      ...req.body,
+      course: courseId,
+    };
+    const newAssignment = assignmentsDao.createAssignment(assignment);
+    res.json(newAssignment);
+  });
+
   // Register routes
   app.post("/api/users/signup", signup);
   app.post("/api/users/signin", signin);

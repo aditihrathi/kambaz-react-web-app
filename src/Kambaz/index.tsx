@@ -7,7 +7,7 @@ import Courses from "./Courses";
 import Account from "./Account"; 
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
-import * as userClient from "./Courses/client.ts";
+import * as userClient from "./Courses/client";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 

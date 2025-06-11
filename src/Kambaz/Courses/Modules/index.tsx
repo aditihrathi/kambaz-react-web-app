@@ -15,9 +15,11 @@ export default function Modules() {
   const [newModule, setNewModule] = useState({ name: "", description: "" });
 
   const loadModules = async () => {
-    const data = await findModules(courseId!);
+    if (!courseId) return;
+    const data = await findModules(courseId);
     dispatch(setModules(data));
   };
+  
 
   const handleCreate = async () => {
     const module = { ...newModule, _id: uuidv4() };

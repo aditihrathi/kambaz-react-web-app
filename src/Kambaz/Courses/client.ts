@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Configure axios
 const API_BASE = 'https://kambaz-node-server-app-7xbg.onrender.com';
 axios.defaults.baseURL = API_BASE;
 axios.defaults.withCredentials = true;

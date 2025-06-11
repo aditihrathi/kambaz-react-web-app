@@ -1,5 +1,7 @@
 import axios from "axios";
+
 const API_BASE = import.meta.env.VITE_REMOTE_SERVER || "http://localhost:4000/api";
+axios.defaults.withCredentials = true;
 
 export const enroll = async ({ userId, courseId }: { userId: string; courseId: string }) => {
   const response = await axios.post(`${API_BASE}/enrollments`, { userId, courseId });

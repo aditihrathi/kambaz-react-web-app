@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Configure axios to always send cookies
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://kambaz-node-server-app-7xbg.onrender.com';
 

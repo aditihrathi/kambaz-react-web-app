@@ -1,41 +1,48 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
-const initialState = {
+export interface Module {
+  _id: string;
+  name: string;
+  description: string;
+}
+
+interface ModuleState {
+  modules: Module[];
+}
+
+const initialState: ModuleState = {
   modules: [],
 };
-const modulesSlice = createSlice({
-  name: "modules",
-  initialState,
-  reducers: {
-    setModules: (state, action) => {
-      state.modules = action.payload;
-    },
 
-    addModule: (state, { payload: module }) => {
-      const newModule: any = {
-        _id: uuidv4(),
-        lessons: [],
-        name: module.name,
-        course: module.course,
+// ✅ Reducer
+const moduleReducer = (state = initialState, action: any): ModuleState => {
+  switch (action.type) {
+    case "modules/setModules":
+      return { ...state, modules: action.payload };
+    case "modules/addModule":
+      return { ...state, modules: [...state.modules, action.payload] };
+    case "modules/removeModule":
+      return {
+        ...state,
+        modules: state.modules.filter((m) => m._id !== action.payload),
       };
-      state.modules = [...state.modules, newModule] as any;
-    },
-    deleteModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.filter(
-        (m: any) => m._id !== moduleId);
-    },
-    updateModule: (state, { payload: module }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === module._id ? module : m
-      ) as any;
-    },
-    editModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === moduleId ? { ...m, editing: true } : m
-      ) as any;
-    },
-  },
+    default:
+      return state;
+  }
+};
+
+export default moduleReducer;
+
+// ✅ Action creators
+export const setModules = (modules: Module[]) => ({
+  type: "modules/setModules",
+  payload: modules,
 });
-export const { addModule, deleteModule, updateModule, editModule, setModules } =
-  modulesSlice.actions;
-export default modulesSlice.reducer;
+
+export const addModule = (module: Module) => ({
+  type: "modules/addModule",
+  payload: module,
+});
+
+export const removeModule = (id: string) => ({
+  type: "modules/removeModule",
+  payload: id,
+});

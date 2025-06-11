@@ -1,21 +1,17 @@
 import axios from "axios";
-axios.defaults.withCredentials = true;
+const API_BASE = "/api/courses";
 
-const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
-const MODULES_API = `${REMOTE_SERVER || ""}/api/modules`;
-
-export const deleteModule = async (moduleId: string) => {
- const response = await axios.delete(`${MODULES_API}/${moduleId}`);
- return response.data; };
-
- export const updateModule = async (module: any) => {
-  const { data } = await axios.put(`${MODULES_API}/${module._id}`, module);
-  return data;
-};
-
-export const findModulesForCourse = async (cid: string) => {
-  const response = await axios.get(`${MODULES_API}/course/${cid}`);
+export const findModules = async (courseId: string) => {
+  const response = await axios.get(`${API_BASE}/${courseId}/modules`);
   return response.data;
 };
 
+export const createModule = async (courseId: string, module: any) => {
+  const response = await axios.post(`${API_BASE}/${courseId}/modules`, module);
+  return response.data;
+};
 
+export const deleteModule = async (courseId: string, moduleId: string) => {
+  const response = await axios.delete(`${API_BASE}/${courseId}/modules/${moduleId}`);
+  return response.data;
+};

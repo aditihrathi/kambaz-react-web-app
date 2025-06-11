@@ -1,22 +1,20 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
-export const findModules = async (courseId: string) => {
-  const res = await axios.get(`/api/courses/${courseId}/modules`, {
-    withCredentials: true,
-  });
-  return res.data;
+const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
+const MODULES_API = `${REMOTE_SERVER || ""}/api/modules`;
+
+export const deleteModule = async (moduleId: string) => {
+ const response = await axios.delete(`${MODULES_API}/${moduleId}`);
+ return response.data; };
+
+ export const updateModule = async (module: any) => {
+  const { data } = await axios.put(`${MODULES_API}/${module._id}`, module);
+  return data;
 };
 
-export const createModule = async (courseId: string, module: any) => {
-  const res = await axios.post(`/api/courses/${courseId}/modules`, module, {
-    withCredentials: true,
-  });
-  return res.data;
+export const findModulesForCourse = async (cid: string) => {
+  const response = await axios.get(`${MODULES_API}/course/${cid}`);
+  return response.data;
 };
 
-export const deleteModule = async (_courseId: string, moduleId: string) => {
-  const res = await axios.delete(`/api/modules/${moduleId}`, {
-    withCredentials: true,
-  });
-  return res.data;
-};

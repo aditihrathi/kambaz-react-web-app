@@ -1,4 +1,4 @@
-import * as dao from "../../modules.js";
+import * as modulesDao from "../Modules/dao.js";
 
 export default function ModuleRoutes(app) {
   // GET all modules for a course

@@ -9,8 +9,9 @@ export const store = configureStore({
   reducer: {
     modules: modulesReducer,
     account: accountReducer,
-    assignments: assignmentsReducer,
     courses: coursesReducer,
     enrollments: enrollmentsReducer,
+    assignments: assignmentsReducer,
   },
+  
 });

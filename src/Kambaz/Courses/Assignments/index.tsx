@@ -6,7 +6,12 @@ import { BiSearch } from "react-icons/bi";
 import { TfiWrite } from "react-icons/tfi";
 import { MdDelete } from "react-icons/md";
 import { Button, Form, ListGroup } from "react-bootstrap";
-import { deleteAssignment } from "./reducer";
+import * as assignmentClient from "./client";
+import { setAssignments, deleteAssignment } from "./reducer";
+
+import { useEffect } from "react";
+
+
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -19,6 +24,15 @@ export default function Assignments() {
   const handleAddAssignment = () => {
     navigate(`/Kambaz/Courses/${cid}/Assignments/new`);
   };
+
+  useEffect(() => {
+    const fetchAssignments = async () => {
+      if (!cid) return;
+      const assignments = await assignmentClient.findAssignmentsForCourse(cid);
+      dispatch(setAssignments(assignments));
+    };
+    fetchAssignments();
+  }, [cid]);
 
   return (
     <div id="wd-assignments" className="p-3">
@@ -89,9 +103,11 @@ export default function Assignments() {
                     <MdDelete
                       className="fs-4 text-danger"
                       role="button"
-                      onClick={() => {
+                      onClick={async () => {
                         const confirmed = window.confirm(`Delete "${a.title}"?`);
-                        if (confirmed) dispatch(deleteAssignment(a._id));
+                        if (confirmed) await assignmentClient.deleteAssignment(a._id);
+                        dispatch(deleteAssignment(a._id));
+                        
                       }}
                     />
                   )}
@@ -134,3 +150,4 @@ export default function Assignments() {
     </div>
   );
 }
+

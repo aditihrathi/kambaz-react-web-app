@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 import { v4 as uuidv4 } from "uuid";
+import * as assignmentClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -16,6 +17,21 @@ export default function AssignmentEditor() {
 
   const isEdit = Boolean(aid);
   const existing = assignments.find((a: any) => a._id === aid);
+
+  const handleSave = async () => {
+    if (!cid) return;
+  
+    if (isEdit) {
+      const updated = await assignmentClient.updateAssignment(assignment._id, assignment);
+      dispatch(updateAssignment(updated));
+    } else {
+      const created = await assignmentClient.createAssignment(cid, assignment);
+      dispatch(addAssignment(created));
+    }
+  
+    navigate(`/Kambaz/Courses/${cid}/Assignments`);
+  };
+  
 
   const [assignment, setAssignment] = useState<any>(
     existing || {
@@ -36,14 +52,6 @@ export default function AssignmentEditor() {
     }
   }, [isEdit, existing]);
 
-  const handleSave = () => {
-    if (isEdit) {
-      dispatch(updateAssignment(assignment));
-    } else {
-      dispatch(addAssignment(assignment));
-    }
-    navigate(`/Kambaz/Courses/${cid}/Assignments`);
-  };
 
   return (
     <div className="p-4">

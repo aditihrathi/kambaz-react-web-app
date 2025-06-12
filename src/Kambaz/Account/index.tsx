@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router";
 import { useSelector } from "react-redux";
 
+import Session from "./Session";
 import Signin from "./Signin";
 import Profile from "./Profile";
 import Signup from "./Signup";
@@ -9,6 +10,7 @@ import AccountNavigation from "./Navigation";
 export default function Account() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
+    <Session>
     <div className="d-flex" id="wd-account-screen">
       <div className="d-none d-md-block">
         <AccountNavigation />
@@ -21,5 +23,7 @@ export default function Account() {
           <Route path="/Signup"  element={<Signup />} />
         </Routes>
       </div>
+      </Session>
+
   );
 }

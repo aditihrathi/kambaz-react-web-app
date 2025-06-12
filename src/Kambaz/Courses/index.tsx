@@ -6,6 +6,8 @@ import AssignmentEditor from "./Assignments/Editor";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import Table from "./People/Table";
+
+
 export default function Courses({ courses }: { courses: any[]; }) {
   const { pathname } = useLocation();
   const { cid } = useParams();

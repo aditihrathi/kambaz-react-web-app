@@ -1,31 +1,20 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import * as client from "./client";
 
-type EnrollmentState = Record<string, string[]>; // userId -> list of courseIds
+export const fetchUsers = createAsyncThunk("users/fetchAll", async () => {
+  const users = await client.findAllUsers();
+  return users;
+});
 
-const initialState: EnrollmentState = {};
-
-const enrollmentsSlice = createSlice({
-  name: "enrollments",
-  initialState,
-  reducers: {
-    enroll: (state, action: PayloadAction<{ userId: string; courseId: string }>) => {
-      const { userId, courseId } = action.payload;
-      if (!state[userId]) {
-        state[userId] = [];
-      }
-      if (!state[userId].includes(courseId)) {
-        state[userId].push(courseId);
-      }
-    },
-    unenroll: (state, action: PayloadAction<{ userId: string; courseId: string }>) => {
-      const { userId, courseId } = action.payload;
-      if (state[userId]) {
-        state[userId] = state[userId].filter((id) => id !== courseId);
-      }
-    },
-    resetEnrollments: () => initialState,
+const usersSlice = createSlice({
+  name: "users",
+  initialState: [] as any[],
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchUsers.fulfilled, (_, action) => {
+      return action.payload;
+    });
   },
 });
 
-export const { enroll, unenroll, resetEnrollments } = enrollmentsSlice.actions;
-export default enrollmentsSlice.reducer;
+export default usersSlice.reducer;

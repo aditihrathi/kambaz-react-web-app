@@ -10,12 +10,25 @@ export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  useSelector((state: any) => state.accountReducer);
 
-  const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kambaz/Account/Signin");
-    setProfile(currentUser);
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch("/api/users/profile", {
+        method: "GET",
+        credentials: "include",
+      });
+  
+      if (!response.ok) throw new Error("Not logged in");
+  
+      const user = await response.json();
+      dispatch(setCurrentUser(user));
+      setProfile(user);
+    } catch (e) {
+      navigate("/Kambaz/Account/Signin");
+    }
   };
+  
 
   const signout = async () => {
     await client.signout();

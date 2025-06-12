@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer"; 
-import * as db from "../Database";
 import * as client from "./client";
 
 

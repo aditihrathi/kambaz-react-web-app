@@ -4,7 +4,7 @@ const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState: [] as any[],
   reducers: {
-    setEnrollments: (state, action) => action.payload,
+    setEnrollments: (_state, action) => action.payload,
     addEnrollment: (state, action) => {
       state.push(action.payload);
     },
